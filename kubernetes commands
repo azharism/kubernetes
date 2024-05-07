@@ -48,6 +48,14 @@ kubectl drain node <node name>: You’ll find yourself using this command when d
 
 
 ==================================================================================================================================================================================
+1. kubectl get events  -------------View cluster events:
+2. kubectl config view  ----------------View the kubectl configuration:
+3. kubectl logs (pod-name)         ----to see the logs
+4. kubectl delete service hello-node
+5. kubectl delete deployment hello-node
+6. 
+
+
 
 
 
