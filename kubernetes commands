@@ -53,7 +53,109 @@ kubectl drain node <node name>: You’ll find yourself using this command when d
 3. kubectl logs (pod-name)         ----to see the logs
 4. kubectl delete service hello-node
 5. kubectl delete deployment hello-node
-6. 
+6. /usr/local/bin/kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'^C   -----(for dashboard access)
+
+==================================================================================================
+kubectl get pods -o wide
+kubectl describe pod (pod name)
+1.kubctl get pods (podname)
+2.kubectl get nods
+3.kubectl apply -f pod.yml
+4.kubectl get pods -o wide
+5.kubectl describe pods (name)
+6.kubectl delete pod (name)
+7.kubectl logs -f (podname)
+8.kubectl logs -f testpod -c c00
+9.curl 172.16.0.1:80  (used to check port mapping of server it listen or not)
+
+kubectl describe nodes
+kubectl logs -f testpod
+kubectl logs -f testpos -c c00   ----(c00 is container name)
+
+========================================================================
+
+annotations are use to describe specific message for pod why pod created...
+===================================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod
+  annotations:
+    description: our first testpod created
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+  restartPolicy: Always
+====================================================================================================================
+
+
+MULTI CONTAINER POD ENVIRONMENT 
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod3
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+    - name: c01
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+
+======================================================================================================================
+kubectl get describe pod testpod3
+kubectl logs -f testpod3 
+kubectl logs -f testpod3 -c c00
+kubectl exec testpod3 -it -c c00 /bin/bash   or  kubectl exec -it podname -- /bin/bash   or  kubectl exec testpod3 -it -c c00 -- /bin/bash
+kubectl exec testpod3 -c c00 -- hostname -i  -------------(used to get the ip of the pod)
+kubectl delete -f pod2.yml  or kubectl delete pod testpod
+
+===========================================================================================================================
+POD ENVIRONMENT  VARIABLES----------------------
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: environments
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+      env:                        # List of environment variables to be used inside the pod
+      - name: MYNAME
+        value: Azhar
+
+========================================================
+kubectl exec -it environments -- /bin/bash   ---(used to enter in pod)
+
+
+
+=================================================================================================
+
+POD WITH PORTS-----------------------------------------------------
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod4
+spec:
+  containers:
+    - name: c00
+      image: httpd
+      ports:
+       - containerPort: 80  
+
+--------------------------------------------
+kubectl get pods -o wide
+curl <ip address pod ip>:80
+
+
 
 
 
