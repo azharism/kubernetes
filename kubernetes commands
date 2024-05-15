@@ -172,6 +172,13 @@ spec:
 ----------------------------------
 
 kubectl get pods -n default    (used to see pods in namespaces)
+kubectl create namespace manto
+kubectl delete namespace manto
+kubectl delete pod pod1 -n manto
+
+========================================================================================
+
+
 
 
 
