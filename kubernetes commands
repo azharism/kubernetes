@@ -171,6 +171,8 @@ spec:
     targetPort: 8080
 ----------------------------------
 
+kubectl get pods -n default    (used to see pods in namespaces)
+
 
 
 
