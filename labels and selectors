@@ -1,0 +1,107 @@
+EXAMPLE OF LABELS
+
+vi pod5.yml
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: delhipod
+  labels:                                                   
+    env: development
+    class: pods
+spec:
+    containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+---------------------------------------------------------------------------------------------------------------
+commands-----
+1. kubectl apply -f pod5.yml
+2. kubectl get pods -o wide
+3. kubectl get pods --show-labels
+4. kubectl label pods delhipod my=azhar --(imperative method to create label on pod)
+5. kubectl get pods -l env=development
+6. kubectl get pods -l env!=development
+7. kubectl delete pods -l env!=development
+8. kubectl delete pods -l env=development
+9. kubectl get pods -l 'env in (development,testing)'
+10.kubectl get pods -l 'env notin (development,testing)'
+11.kubectl delete pods -l 'env in (development, testing)'
+
+======================================================================================================================================================
+node selector (use to select node on which we want to create pods)
+
+vi pod6.yml
+
+NODE SELECTOR EXAMPLE
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nodelabels
+  labels:
+    env: development
+spec:
+    containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+    nodeSelector:                                         
+       hardware: t2-medium
+
+---------------------------------------------------
+command-
+1. kubectl apply -f pod6.yml
+2. kubectl get nodes
+3. kubectl label node 
+4. kubectl label nodes minikube hardware=t2-medium
+==============================================================================================================================
+
+EXAMPLE OF REPLICATION CONTROLLER------------
+vi myrc.yml
+
+kind: ReplicationController               
+apiVersion: v1
+metadata:
+  name: myreplica
+spec:
+  replicas: 2            
+  selector:        
+    myname: Bhupinder Rajput                             
+  template:                
+    metadata:
+      name: testpod6
+      labels:            
+        myname: Bhupinder
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+--------------------------------------------------------------------------------------------
+command--
+1. kubectl apply -f myrc.yml
+2. kubectl decribe rc myreplica
+3. kubectl get rc
+4. kubectl scale --replicas=5 rc -l myname=bhupinder
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
