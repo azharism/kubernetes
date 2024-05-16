@@ -1,0 +1,70 @@
+kubectl port-forward mywebserver 5000:6000
+kubectl port-forward svc/my-service 5000:6000
+kubectl port-forward deploy/my-deployment 5000:6000
+kubectl expose deployment nginx --port=80 --type=NodePort
+==========================================================================
+
+Services----
+$ kubectl get svc
+$ kubectl describe svc
+$ kubectl get svc -o wide
+$ kubectl get svc -o yaml
+$ kubectl get svc --show-labels
+DaemonSets-------------------
+$ kubectl get ds
+$ kubectl get ds --all-namespaces
+$ kubectl describe ds [daemonset _name] -n [namespace_name]
+$ kubectl get ds [ds_name] -n [ns_name] -o yaml
+
+
+---------------------------------------------
+
+Events
+$ kubectl get events
+$ kubectl get events -n kube-system
+$ kubectl get events -w
+--------------------------------------------
+Logs
+$ kubectl logs [pod_name]
+$ kubectl logs --since=1h [pod_name]
+$ kubectl logs --tail =20 [pod_name]
+$ kubectl logs -f -c [container_name] [pod_name]
+$ kubectl logs [pod_name] > pod.log
+-----------------------------------------------------
+ReplicaSets
+$ kubectl get rs
+$ kubectl describe rs
+$ kubectl get rs -o wide
+$ kubectl get rs -o yaml
+--------------------------------------------------------
+
+Roles
+$ kubectl get roles --all-namespaces
+$ kubectl get roles --all-namespaces -o yaml
+------------------------------------------------------
+
+ConfigMaps
+$ kubectl get cm
+$ kubectl get cm --all-namespaces
+$ kubectl get cm --all-namespaces -o yaml
+--------------------------------------------------------
+
+Ingress
+$ kubectl get ing
+$ kubectl get ing --all-namespaces
+------------------------------------------------
+
+PersistentVolume
+$ kubectl get pv
+$ kubectl describe pv
+---------------------------------------------
+
+PersistentVolumeClaim
+$ kubectl get pvc
+$ kubectl describe pvc
+
+------------------------------------
+
+
+
+
