@@ -1,0 +1,147 @@
+kubectl get name space
+kubectl get pods -n dev
+----------------------------------------------
+for name space creation--
+
+==============================NAMESPACES===================================
+vim devns.yml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: dev
+   labels:
+     name: dev
+---------------------------
+command -kubectl apply -f devns.yml
+------------------------------------
+vi pod20.yml
+kind: Pod                              
+apiVersion: v1                     
+metadata:                           
+  name: testpod1                  
+spec:                                    
+  containers:                      
+    - name: c00                     
+      image: ubuntu              
+      command: ["/bin/bash", "-c", "while true; do echo Technical Guftgu; sleep 5 ; done"]
+  restartPolicy: Never       
+-----------------------------------
+command --kubectl apply -f pod20.yml -n dev
+=====================================================
+namespace setup----
+
+1. kubectl config set-context $(kubectl config current-context) --namespace=dev  (dev is namespace name
+2. kubectl config view | grep namespace:
+=============================================================================================================================
+
+resources----
+
+vim resource.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resources
+spec:
+  containers:
+  - name: resource
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+    resources:                                          
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+-------------------command kubectl apply -f resource.yml
+                           kubectl describe pod resource
+
+===========================================================================
+
+============RESOURCEQUOTA========================================
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+   name: myquota
+spec:
+  hard:
+    limits.cpu: "400m"
+    limits.memory: "400Mi"
+    requests.cpu: "200m"
+    requests.memory: "200Mi"
+-----------------------------------
+
+vim testpod.yml
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: deployments
+spec:
+  replicas: 3
+  selector:      
+    matchLabels:
+     objtype: deployment
+  template:
+    metadata:
+      name: testpod8
+      labels:
+        objtype: deployment
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+         resources:
+            requests:
+              cpu: "200m"
+------------------------
+commad- kubectl deployment
+kubectl apply -f testpod.yml
+kubectl get rs
+kubectl describe rs deployments-55684b4879
+
+----------------------------------------------------------------------------
+vi cpudefualt.yml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limit-range
+spec:
+  limits:
+  - default:
+      cpu: 1
+    defaultRequest:
+      cpu: 0.5
+    type: Container
+------------------------------
+
+command-- 
+kubectl apply -f cpudefualt.yml
+kubectl describe cpudefualt
+
+---------------------------------------------------------
+
+vi cpu3.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: default-cpu-demo-3
+spec:
+  containers:
+  - name: default-cpu-demo-3-ctr
+    image: nginx
+    resources:
+      requests:
+        cpu: "0.75"
+
+---------------------
+
+command kubectl apply -f cpu3.yml
+
+
+
+
+
