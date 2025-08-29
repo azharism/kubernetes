@@ -23,3 +23,7 @@ spec:
   command---
   kubectl get deploy
   kubectl rollout undo deploy mydeployment
+ kubectl rollout status deployment/mydeployments
+kubectl rollout history deployment/mydeployments
+kubectl set image deployment/mydeployments c00=centos:8
+
