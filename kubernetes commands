@@ -178,6 +178,28 @@ kubectl delete pod pod1 -n manto
 
 ========================================================================================
 
+kubectl rollout status deployment my-webapp
+# 👉 Deployment ka status check karne ke liye (update ho raha hai ya complete)
+
+kubectl rollout history deployment my-webapp
+# 👉 Deployment ki puri history dekhne ke liye (kitne revisions huye)
+
+kubectl rollout history deployment my-webapp --revision=2
+# 👉 Ek specific revision ka detail dekhne ke liye
+
+kubectl rollout pause deployment my-webapp
+# 👉 Deployment update ko pause karne ke liye
+
+kubectl rollout resume deployment my-webapp
+# 👉 Paused rollout ko resume karne ke liye
+
+kubectl rollout undo deployment my-webapp
+# 👉 Deployment ko rollback karna (previous stable revision pe wapas)
+
+kubectl rollout undo deployment my-webapp --to-revision=2
+# 👉 Specific revision number pe rollback karne ke liye
+
+
 
 
 
